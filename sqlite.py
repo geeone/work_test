@@ -72,4 +72,3 @@ else:
         print cur.fetchall()
         con.close()
 
-
