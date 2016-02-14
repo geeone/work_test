@@ -38,7 +38,9 @@ if (checkConnect() != True):
 else:
     """ SEND REQUEST TO SERVER """
     s = requests.session()
-    r = s.get('http://127.0.0.1:8000/get_ip_list?type=http') #send request
+    print "Enter request type (http or socks): "
+    tp = raw_input()
+    r = s.get('http://127.0.0.1:8000/get_ip_list?type='+tp) #send request
     
     """ CHECK SERVER STATUS """
     if (r.status_code != 200):
