@@ -2,7 +2,6 @@ import sqlite3 as lite
 import requests
 import urllib2
 from threading import Thread
-from threading import BoundedSemaphore
 
 """ CHECK CONNECTION WITH SERVER """
 def checkConnect():
@@ -61,6 +60,8 @@ else:
             print "Error: ", x
         con.commit()
         
+        #cur.execute('DROP TABLE Addresses')
+        
         print "Please, wait..."
         insertToTable()
         
@@ -70,4 +71,3 @@ else:
         cur.execute('SELECT * FROM Addresses')
         print cur.fetchall()
         con.close()
-
