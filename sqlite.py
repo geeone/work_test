@@ -10,11 +10,26 @@ def checkConnect():
     except urllib2.URLError:
         return False
     return True
-
+"""
+''' FUNCTION FOR MULTI-THREADING '''
+def insertInside(ip, id, i):
+    cur.execute('INSERT INTO Addresses (ID, IP, Source_ID, GUID) VALUES(NULL, "'+ip[i]+'", NULL, "'+id[i]+'")')
+    con.commit()
+    pass
+"""
 def insertToTable():
     for i in xrange(len(ip)):
         cur.execute('INSERT INTO Addresses (ID, IP, Source_ID, GUID) VALUES(NULL, "'+ip[i]+'", NULL, "'+id[i]+'")')
         con.commit()
+    """
+    ''' MULTI-THREADING / DON'T WORK '''
+    t = []
+    for i in xrange(len(ip)):
+        t.append(Thread(target=insertInside, args=(ip, id, i)))
+        t[i].start()
+    for i in xrange(len(ip)):
+        t.join()
+    """
     print "Operation is successfully completed."
     pass
 
