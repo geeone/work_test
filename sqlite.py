@@ -71,3 +71,5 @@ else:
         cur.execute('SELECT * FROM Addresses')
         print cur.fetchall()
         con.close()
+
+
