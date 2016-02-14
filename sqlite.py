@@ -88,8 +88,12 @@ else:
         #cur.execute('DROP TABLE Addresses')
         
         print "Please, wait..."
-        cur.execute('INSERT INTO Sources (ID, Name) VALUES(NULL, "'+ht+'")')
-        con.commit()
+        cur.execute('SELECT * FROM Sources WHERE Name = "'+ht+'"')
+        if (cur.fetchall() != []):
+            print "This Host value has been got earlier."
+        else:
+            cur.execute('INSERT INTO Sources (ID, Name) VALUES(NULL, "'+ht+'")')
+            con.commit()
         insertToTable()
         
         """" OUTPUT VALUES FROM TABLES """
