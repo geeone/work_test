@@ -21,6 +21,8 @@ def insertToTable():
     for i in xrange(len(ip)):
         cur.execute('INSERT INTO Addresses (ID, IP, Source_ID, GUID) VALUES(NULL, "'+ip[i]+'", NULL, "'+id[i]+'")')
         con.commit()
+    cur.execute('UPDATE Addresses SET Source_ID = (SELECT ID FROM Sources WHERE Name="'+ht+'")') 
+    con.commit()
     """
     ''' MULTI-THREADING / DON'T WORK '''
     t = []
@@ -47,12 +49,17 @@ else:
         print "Error! Server isn't available. Status code - ", r.status_code
         pass
     else:
-        """ GET IP & ID FROM SERVER """
-        str = r.content #get text
+        """ GET HOST VALUE, IP & ID FROM SERVER """
+        ct = r.content #get content
+        hd = r.headers #get headers
         
         dct = {} #new dict
-        dct = eval(str) #convert string to dict
+        dct = eval(ct) #convert string to dict
         d = dct.get('message') #get values from key 'message'
+        
+        dct1 = {}
+        dct1 = eval(str(hd))
+        ht = dct1.get('Host') #get values from key 'Host'
         
         ip = [] #new lists
         id = []
@@ -77,9 +84,12 @@ else:
             print "Error: ", x
         con.commit()
         
+        #cur.execute('DROP TABLE Sources')
         #cur.execute('DROP TABLE Addresses')
         
         print "Please, wait..."
+        cur.execute('INSERT INTO Sources (ID, Name) VALUES(NULL, "'+ht+'")')
+        con.commit()
         insertToTable()
         
         """" OUTPUT VALUES FROM TABLES """
