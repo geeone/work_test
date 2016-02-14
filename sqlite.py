@@ -20,7 +20,7 @@ def insertToTable():
     pass
 
 if (checkConnect() != True):
-    print "Error! Most likely, you forgot to run the server."
+    print "Error! Most likely, you forgot to run server."
 else:
     """ SEND REQUEST TO SERVER """
     s = requests.session()
@@ -61,11 +61,10 @@ else:
             print "Error: ", x
         con.commit()
         
-        #cur.execute('DROP TABLE Addresses')
-        
         print "Please, wait..."
         insertToTable()
         
+        """" OUTPUT VALUES FROM TABLES """
         cur.execute('SELECT * FROM Sources')
         print cur.fetchall()
         cur.execute('SELECT * FROM Addresses')
